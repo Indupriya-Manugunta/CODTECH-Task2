@@ -1,1 +1,99 @@
-# CODTECH-Task2
+NAME: MANUGUNTA INDU PRIYA
+COMPANY: CODTECHIT SOLUTIONS
+ID: CT6WDS523
+DURATION: JUNE TO AUGUST 2024
+OVERVIEW OF THE PROJECT
+PROJECT: STUDENT GRADE TRACKER
+FUNCTIONS
+This application will allow you to store, update, and retrieve student grades.
+
+1. Define Requirements
+
+	•	Students: Each student should have a unique identifier (e.g., ID number), name, and grades.
+	•	Grades: Can be stored per subject/course.
+	•	Functions:
+	•	Add a student
+	•	Add a grade
+	•	Update a grade
+	•	Retrieve a student’s grades
+	•	Calculate average grade per student
+
+2. Structure
+
+We’ll use dictionaries to store students and their grades.
+
+3. Implementation
+
+# Define the Student class
+class Student:
+    def __init__(self, name):
+        self.name = name
+        self.grades = []
+
+    def add_grade(self, grade):
+        self.grades.append(grade)
+
+    def average_grade(self):
+        if self.grades:
+            return sum(self.grades) / len(self.grades)
+        return 0.0
+
+# Define the main function
+def grade_tracker():
+    students = {}
+
+    while True:
+        print("Grade Tracker")
+        print("1. Add student")
+        print("2. Add grade to student")
+        print("3. Display student grades and average")
+        print("4. Display all students")
+        print("5. Exit")
+
+        choice = input("Enter choice (1/2/3/4/5): ")
+
+        if choice == '1':
+            name = input("Enter student name: ")
+            if name in students:
+                print(f"Student {name} already exists.")
+            else:
+                students[name] = Student(name)
+                print(f"Student {name} added.")
+
+        elif choice == '2':
+            name = input("Enter student name: ")
+            if name in students:
+                try:
+                    grade = float(input("Enter grade: "))
+                    students[name].add_grade(grade)
+                    print(f"Grade {grade} added to {name}.")
+                except ValueError:
+                    print("Invalid grade. Please enter a number.")
+            else:
+                print(f"Student {name} does not exist.")
+
+        elif choice == '3':
+            name = input("Enter student name: ")
+            if name in students:
+                student = students[name]
+                print(f"Grades for {name}: {student.grades}")
+                print(f"Average grade for {name}: {student.average_grade():.2f}")
+            else:
+                print(f"Student {name} does not exist.")
+
+        elif choice == '4':
+            if students:
+                for name, student in students.items():
+                    print(f"Student: {name}, Grades: {student.grades}, Average: {student.average_grade():.2f}")
+            else:
+                print("No students found.")
+
+        elif choice == '5':
+            print("Exiting the grade tracker. Goodbye!")
+            break
+
+        else:
+            print("Invalid input. Please enter a number between 1 and 5.")
+
+# Run the grade tracker function
+grade_tracker()
